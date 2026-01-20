@@ -50,43 +50,35 @@ export function ChatActivityChart({ data }: Props) {
         <CardTitle>WhatsApp Group Activity</CardTitle>
         <CardDescription>Last 7 days of conversation</CardDescription>
       </CardHeader>
+      <CardContent>
+        <ChartContainer config={chartConfig} className="h-114 w-[100%]">
+          <BarChart data={data}>
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="date"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={10}
+            />
+            <YAxis
+              domain={[0, "dataMax + 5"]}
+              tickLine={false}
+              axisLine={false}
+              allowDecimals={false}
+            />
 
-      <ChartContainer config={chartConfig}>
-        {/* <ResponsiveContainer width="100%" aspect={1.618} height={100}> */}
-        <BarChart
-          data={data}
-          // height={280}
-          // style={{
-          //   width: "100%",
-          //   maxHeight: "70vh",
-          //   aspectRatio: 1.618,
-          // }}
-        >
-          <CartesianGrid vertical={false} />
-          <XAxis
-            dataKey="date"
-            tickLine={false}
-            axisLine={false}
-            tickMargin={10}
-          />
-          <YAxis
-            domain={[0, "dataMax + 5"]}
-            tickLine={false}
-            axisLine={false}
-            allowDecimals={false}
-          />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent indicator="dashed" />}
+            />
+            <Legend />
 
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent indicator="dashed" />}
-          />
-          <Legend />
-
-          <Bar dataKey="active" fill="var(--color-active)" radius={4} />
-          <Bar dataKey="joined" fill="var(--color-joined)" radius={4} />
-        </BarChart>
-        {/* </ResponsiveContainer> */}
-      </ChartContainer>
+            <Bar dataKey="active" fill="var(--color-active)" radius={4} />
+            <Bar dataKey="joined" fill="var(--color-joined)" radius={4} />
+          </BarChart>
+          {/* </ResponsiveContainer> */}
+        </ChartContainer>
+      </CardContent>
     </Card>
   );
 }
