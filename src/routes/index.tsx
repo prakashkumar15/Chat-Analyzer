@@ -1,3 +1,4 @@
+import { FileDropzone } from "@/components/dropzone";
 import { Input } from "@/components/ui/input";
 import { analyzeChatFn } from "@/utils/chat.function";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
@@ -11,13 +12,9 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<any>(null);
-const router = useNavigate();
-  async function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
+  const router = useNavigate();
+  async function onFileSelected(file: File) {
     if (!file) return;
-
-    console.log("File selected:", file.name);
-
     setLoading(true);
     setError(null);
     setResult(null);
@@ -27,7 +24,6 @@ const router = useNavigate();
       formData.append("file", file);
 
       const data = await analyzeChatFn({ data: formData });
-      // ✅ navigate after success
       router({
         to: "/reports/$Id",
         params: { Id: data.reportId },
@@ -42,19 +38,18 @@ const router = useNavigate();
   }
 
   return (
-    <div style={{ padding: 24 }}>
-      <h1>WhatsApp Chat Analyzer</h1>
+    <div className="flex min-h-[calc(100vh-64px)] items-center justify-center px-4">
+      <div className="w-full max-w-xl space-y-6">
+        <FileDropzone onFileSelected={onFileSelected} disabled={loading} />
 
-      <Input
-        type="file"
-        accept=".txt"
-        onChange={onFileChange}
-        disabled={loading}
-      />
+        {loading && (
+          <p className="text-center text-sm text-muted-foreground">
+            Analyzing chat…
+          </p>
+        )}
 
-      {loading && <p>Analyzing chat…</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
+        {error && <p className="text-center text-sm text-red-500">{error}</p>}
+      </div>
     </div>
   );
 }
