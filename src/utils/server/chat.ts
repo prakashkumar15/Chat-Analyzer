@@ -3,6 +3,8 @@ import { getDb } from "./db";
 import { computeStats } from "./analytics";
 import { parseChat } from "./parseChat";
 import { ObjectId } from "mongodb";
+
+
 export type ChatReport = {
   _id: string;
   createdAt: string;

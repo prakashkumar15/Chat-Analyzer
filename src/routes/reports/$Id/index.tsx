@@ -104,7 +104,7 @@ function RouteComponent() {
 
       <Card style={{ marginTop: 24 }}>
         <CardHeader>
-          <CardTitle>Power Users</CardTitle>
+          <CardTitle>Active Users</CardTitle>
           <CardDescription>
             Active for at least 4 days in the last 7 days
           </CardDescription>
@@ -113,7 +113,7 @@ function RouteComponent() {
         <CardContent>
           {data.stats.powerUsers.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              No power users found for this period.
+              No Active users found for this period.
             </p>
           ) : (
             <ul className="list-disc pl-5 space-y-1">
